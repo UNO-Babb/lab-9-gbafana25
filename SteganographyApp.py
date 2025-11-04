@@ -39,6 +39,7 @@ def encode(img, msg):
     else:
       redBinary = redBinary[0:7] + letterBinary[5]
       greenBinary = greenBinary[0:7] + letterBinary[6]
+      #print(letterBinary)
       blueBinary = blueBinary[0:7] + letterBinary[7]
 
       letterSpot = letterSpot + 1
@@ -97,29 +98,33 @@ def numberToBinary(num):
   """Takes a base10 number and converts to a binary string with 8 bits"""
   binary = ""
   #Convert from decimal to binary
-
-
+  binary = bin(num)[2:].zfill(8)
+  #print(binary)
   return binary
 
 def binaryToNumber(bin):
   """Takes a string binary value and converts it to a base10 integer."""
   decimal = 0
-
-
+  decimal = int(bin, 2)
+  #print(decimal)
   return decimal
 
 def main():
   #Ask user if they want to encode/decode
-  myImg = Image.open('pki.png')
-  myMsg = "This is a secret message I will hide in an image."
-  encode(myImg, myMsg)
-  myImg.close()
-
-  """
-  yourImg = Image.open('secretImg.png')
-  msg = decode(yourImg)
-  print(msg)
-  """
+  opt = input("Would you like to encode or decode a message? (encode/decode) ")
+  if opt == "encode":
+    filename = input("Name of the image file: ")
+    myImg = Image.open(filename)
+    #myMsg = "This is a secret message I will hide in an image."
+    myMsg = input("Secret message to encode: ")
+    encode(myImg, myMsg)
+    myImg.close()
+  elif opt == "decode":
+    filename = input("Name of image file: ")
+    yourImg = Image.open(filename)
+    msg = decode(yourImg)
+    print(msg)
+    
     
 if __name__ == '__main__':
   main()
